@@ -4,7 +4,7 @@ With this package you can easily use picker with onPress function.
 
 Using `react-native-modal` and `@react-native-picker/picker` component for IOS and using `RecyclerView` and `AlertDialog` for Android as `NativeModule`.
 
-Note: this fork contains the delete button functionality
+Note: this fork contains the delete button functionality from vascofg/react-native-picker-module updated with latest cahnges from talut/react-native-picker-module.
 
 
 <img src="./docs/android-picker-module.png" width="200"> <img width="200" src="./docs/ios-picker-module.png">
@@ -66,7 +66,7 @@ cd ios && pod install
 **Automatic linking**
 
 ```
-react-native link react-native-picker-delete-module
+react-native link react-native-picker-module-delete
 ```
 
 **Manual Linking**
