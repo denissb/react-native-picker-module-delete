@@ -1,10 +1,10 @@
-// Type definitions for react-native-picker-module 2.0.7
-// Project: https://github.com/talut/react-native-picker-module
+// Type definitions for react-native-picker-module-delete 2.0.7
+// Project: https://github.com/talut/react-native-picker-module-delete
 // Definitions by: Talut TASGIRAN <https://github.com/talut>
 // TypeScript Version: 3.8.2
 
 
-declare module "react-native-picker-module" {
+declare module "react-native-picker-module-delete" {
   import { FunctionComponent, RefObject } from "react"
 
   export interface PickerRef {
