@@ -95,6 +95,7 @@ react-native link react-native-picker-module-delete
 | onValueChange                  | func                 | (value: string) => void |**Yes**   |Android, IOS|
 | cancelButton                   | string               | `Cancel`                |**No**        |IOS        |
 | confirmButton                  | string               | `Confirm`               |**No**        |IOS        |
+| deleteButton                   | string               | `Delete`                |**No**        |IOS        |
 | onCancel                       | func                 | -                       |**No**    |Android, IOS|
 | onDelete                       | func                 | -                       |**No**    |Android, IOS|
 | selectedColor                  | string               | -                       |**No**    |Android, IOS|
