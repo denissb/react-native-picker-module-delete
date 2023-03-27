@@ -15,6 +15,7 @@ public class ReactNativePickerModuleModule extends ReactContextBaseJavaModule {
 
     public ReactNativePickerModuleModule(ReactApplicationContext reactContext) {
         super(reactContext);
+        this.reactContext = reactContext;
     }
 
     @ReactMethod

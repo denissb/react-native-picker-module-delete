@@ -56,6 +56,11 @@ declare module "react-native-picker-module" {
      */
     cancelButton?: string
     /**
+     * Text of delete button for IOS
+     * @default Cancel
+     */
+    deleteButton?: string
+    /**
      * Callback function run after delete
      */
     onDelete?: () => void
