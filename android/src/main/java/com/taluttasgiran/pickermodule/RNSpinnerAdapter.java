@@ -1,5 +1,7 @@
 package com.taluttasgiran.pickermodule;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Bitmap;
@@ -36,7 +38,9 @@ public class RNSpinnerAdapter extends RecyclerView.Adapter<RNSpinnerAdapter.MyVi
     Callback callback;
     Boolean showDeleteButton;
     String selectedValue;
-    ReadableArray selectedColor;
+    String backgroundColor;
+    String tintColor;
+    String selectedColor;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout linearLayout;
@@ -47,16 +51,20 @@ public class RNSpinnerAdapter extends RecyclerView.Adapter<RNSpinnerAdapter.MyVi
         }
     }
 
-    RNSpinnerAdapter(ReactContext reactContext, ReadableArray myDataset, RNSpinner androidSpinner, Boolean showDeleteButton, Callback spinnerCallback, String mSelectedValue, ReadableArray mSelectedColor) {
-        this.reactContext = reactContext;
+    RNSpinnerAdapter(ReactContext reactContext, ReadableArray myDataset, RNSpinner androidSpinner, 
+                    Boolean showDeleteButton, Callback spinnerCallback, String mSelectedValue, 
+                    @Nullable String mSelectedColor, @Nullable String backgroundColor, @Nullable String tintColor) {
         mDataset = myDataset;
         rnSpinner = androidSpinner;
         callback = spinnerCallback;
         this.showDeleteButton = showDeleteButton;
         selectedValue = mSelectedValue;
         selectedColor = mSelectedColor;
+        this.backgroundColor = backgroundColor;
+        this.tintColor = tintColor;
     }
 
+    @NonNull
     @Override
     public RNSpinnerAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                             int viewType) {
@@ -75,25 +83,35 @@ public class RNSpinnerAdapter extends RecyclerView.Adapter<RNSpinnerAdapter.MyVi
         String text = null;
         Button button = holder.linearLayout.findViewById(R.id.button);
         ImageButton deleteButton = holder.linearLayout.findViewById(R.id.deleteButton);
+        
+        if (backgroundColor != null) {
+            holder.linearLayout.setBackgroundColor(Color.parseColor(backgroundColor));
+            button.setBackgroundColor(Color.parseColor(backgroundColor));
+        }
+        if (tintColor != null) {
+            button.setTextColor(Color.parseColor(tintColor));
+        }
         if (mDataset.getType(position) == ReadableType.Map) {
-            if (mDataset.getMap(position).getType("value") == ReadableType.String) {
-                value = mDataset.getMap(position).getString("value");
-            } else {
-                double number = mDataset.getMap(position).getDouble("value");
-                if (number == Math.rint(number)) {
-                    value = String.valueOf((int) number);
+            if (mDataset.getMap(position).getType("value") != ReadableType.Null) {
+                if (mDataset.getMap(position).getType("value") == ReadableType.String) {
+                    value = mDataset.getMap(position).getString("value");
                 } else {
-                    value = String.valueOf(number);
+                    double number = mDataset.getMap(position).getDouble("value");
+                    if (number == Math.rint(number)) {
+                        value = String.valueOf((int) number);
+                    } else {
+                        value = String.valueOf(number);
+                    }
                 }
-            }
-            if (mDataset.getMap(position).getType("label") == ReadableType.String) {
-                text = mDataset.getMap(position).getString("label");
-            } else {
-                double number = mDataset.getMap(position).getDouble("label");
-                if (number == Math.rint(number)) {
-                    text = String.valueOf((int) number);
+                if (mDataset.getMap(position).getType("label") == ReadableType.String) {
+                    text = mDataset.getMap(position).getString("label");
                 } else {
-                    text = String.valueOf(number);
+                    double number = mDataset.getMap(position).getDouble("label");
+                    if (number == Math.rint(number)) {
+                        text = String.valueOf((int) number);
+                    } else {
+                        text = String.valueOf(number);
+                    }
                 }
             }
         } else if (mDataset.getType(position) == ReadableType.String) {
@@ -115,16 +133,13 @@ public class RNSpinnerAdapter extends RecyclerView.Adapter<RNSpinnerAdapter.MyVi
             if (selectedValue.equals(value)) {
                 button.setEnabled(false);
                 if (selectedColor != null) {
-                    button.setTextColor(Color.rgb(selectedColor.getInt(0), selectedColor.getInt(1), selectedColor.getInt(2)));
+                    button.setTextColor(Color.parseColor(selectedColor));
                 }
             }
         }
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rnSpinner.hide();
-                callback.invoke(finalValue);
-            }
+        button.setOnClickListener(v -> {
+            rnSpinner.hide();
+            callback.invoke(finalValue);
         });
         if (this.showDeleteButton == true) {
             deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -145,5 +160,3 @@ public class RNSpinnerAdapter extends RecyclerView.Adapter<RNSpinnerAdapter.MyVi
         return mDataset.size();
     }
 }
-
-
