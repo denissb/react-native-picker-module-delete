@@ -1,6 +1,6 @@
 {
   "name": "react-native-picker-module-delete",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "React Native Picker Module for Android & IOS",
   "main": "index.js",
   "types": "react-native-picker-module-delete.d.ts",
