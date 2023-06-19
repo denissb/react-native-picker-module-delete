@@ -51,9 +51,10 @@ public class RNSpinnerAdapter extends RecyclerView.Adapter<RNSpinnerAdapter.MyVi
         }
     }
 
-    RNSpinnerAdapter(ReactContext reactContext, ReadableArray myDataset, RNSpinner androidSpinner, 
-                    Boolean showDeleteButton, Callback spinnerCallback, String mSelectedValue, 
+    RNSpinnerAdapter(ReactContext reactContext, ReadableArray myDataset, RNSpinner androidSpinner,
+                    Boolean showDeleteButton, Callback spinnerCallback, String mSelectedValue,
                     @Nullable String mSelectedColor, @Nullable String backgroundColor, @Nullable String tintColor) {
+        this.reactContext = reactContext;
         mDataset = myDataset;
         rnSpinner = androidSpinner;
         callback = spinnerCallback;
@@ -83,7 +84,7 @@ public class RNSpinnerAdapter extends RecyclerView.Adapter<RNSpinnerAdapter.MyVi
         String text = null;
         Button button = holder.linearLayout.findViewById(R.id.button);
         ImageButton deleteButton = holder.linearLayout.findViewById(R.id.deleteButton);
-        
+
         if (backgroundColor != null) {
             holder.linearLayout.setBackgroundColor(Color.parseColor(backgroundColor));
             button.setBackgroundColor(Color.parseColor(backgroundColor));

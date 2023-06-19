@@ -22,7 +22,7 @@ import com.facebook.react.bridge.ReactContext;
 public class RNSpinner extends AlertDialog {
     private final AlertDialog dialog;
 
-    RNSpinner(Context context, ReactContext reactContext, ReadableArray labels, @Nullable String selectedValue, @Nullable String title, Boolean showDeleteButton, @Nullable String selectedColor,
+    RNSpinner(Context context, ReactContext reactContext, ReadableArray labels, @Nullable String selectedValue, @Nullable String title, @Nullable String selectedColor, Boolean showDeleteButton, 
               @Nullable String backgroundColor, @Nullable String tintColor, final Callback callback, @Nullable final Callback onCancelCallback) {
         super(context);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
