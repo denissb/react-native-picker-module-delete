@@ -17,11 +17,12 @@ import android.widget.TextView;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReadableArray;
+import com.facebook.react.bridge.ReactContext;
 
 public class RNSpinner extends AlertDialog {
     private final AlertDialog dialog;
 
-    RNSpinner(Context context, ReadableArray labels, @Nullable String selectedValue, @Nullable String title, @Nullable String selectedColor,
+    RNSpinner(Context context, ReactContext reactContext, ReadableArray labels, @Nullable String selectedValue, @Nullable String title, @Nullable String selectedColor, Boolean showDeleteButton, 
               @Nullable String backgroundColor, @Nullable String tintColor, final Callback callback, @Nullable final Callback onCancelCallback) {
         super(context);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -49,7 +50,7 @@ public class RNSpinner extends AlertDialog {
         } else {
             tvPlaceholder.setVisibility(View.GONE);
         }
-        RNSpinnerAdapter mAdapter = new RNSpinnerAdapter(labels, this, callback, selectedValue, selectedColor, backgroundColor, tintColor);
+        RNSpinnerAdapter mAdapter = new RNSpinnerAdapter(reactContext, labels, this, showDeleteButton, callback, selectedValue, selectedColor, backgroundColor, tintColor);
         recyclerView.setAdapter(mAdapter);
         if (linearLayout.getParent() != null) {
             ((ViewGroup) linearLayout.getParent()).removeView(linearLayout);

@@ -13,10 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.facebook.react.bridge.Callback;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableType;
 
@@ -27,9 +32,11 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class RNSpinnerAdapter extends RecyclerView.Adapter<RNSpinnerAdapter.MyViewHolder> {
-    private final ReadableArray mDataset;
+    ReactContext reactContext;
+    private ReadableArray mDataset;
     RNSpinner rnSpinner;
     Callback callback;
+    Boolean showDeleteButton;
     String selectedValue;
     String backgroundColor;
     String tintColor;
@@ -44,10 +51,14 @@ public class RNSpinnerAdapter extends RecyclerView.Adapter<RNSpinnerAdapter.MyVi
         }
     }
 
-    RNSpinnerAdapter(ReadableArray myDataset, RNSpinner androidSpinner, Callback spinnerCallback, String mSelectedValue, @Nullable String mSelectedColor, @Nullable String backgroundColor, @Nullable String tintColor) {
+    RNSpinnerAdapter(ReactContext reactContext, ReadableArray myDataset, RNSpinner androidSpinner,
+                    Boolean showDeleteButton, Callback spinnerCallback, String mSelectedValue,
+                    @Nullable String mSelectedColor, @Nullable String backgroundColor, @Nullable String tintColor) {
+        this.reactContext = reactContext;
         mDataset = myDataset;
         rnSpinner = androidSpinner;
         callback = spinnerCallback;
+        this.showDeleteButton = showDeleteButton;
         selectedValue = mSelectedValue;
         selectedColor = mSelectedColor;
         this.backgroundColor = backgroundColor;
@@ -63,11 +74,17 @@ public class RNSpinnerAdapter extends RecyclerView.Adapter<RNSpinnerAdapter.MyVi
         return new MyViewHolder(linearLayout);
     }
 
+    private void sendEvent(ReactContext reactContext, String eventName, WritableMap params) {
+        reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(eventName, params);
+    }
+
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         String value = null;
         String text = null;
         Button button = holder.linearLayout.findViewById(R.id.button);
+        ImageButton deleteButton = holder.linearLayout.findViewById(R.id.deleteButton);
+
         if (backgroundColor != null) {
             holder.linearLayout.setBackgroundColor(Color.parseColor(backgroundColor));
             button.setBackgroundColor(Color.parseColor(backgroundColor));
@@ -125,6 +142,18 @@ public class RNSpinnerAdapter extends RecyclerView.Adapter<RNSpinnerAdapter.MyVi
             rnSpinner.hide();
             callback.invoke(finalValue);
         });
+        if (this.showDeleteButton == true) {
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    WritableMap params = Arguments.createMap();
+                    params.putString("value", finalValue);
+                    sendEvent(RNSpinnerAdapter.this.reactContext, "ItemDeleted", params);
+                }
+            });
+        } else {
+            deleteButton.setVisibility(View.GONE);
+        }
     }
 
     @Override

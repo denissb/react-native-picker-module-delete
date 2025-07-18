@@ -8,11 +8,20 @@
     <Button xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/button"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="start|center_vertical"
             android:padding="15dp"
             android:textAllCaps="false"
             android:text="Button" />
+
+    <ImageButton
+        android:id="@+id/deleteButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="36dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        app:srcCompat="@android:drawable/ic_delete" />
 
 </LinearLayout>

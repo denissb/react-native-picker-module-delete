@@ -1,9 +1,9 @@
 {
-  "name": "react-native-picker-module",
-  "version": "2.0.7",
+  "name": "react-native-picker-module-delete",
+  "version": "2.0.13",
   "description": "React Native Picker Module for Android & IOS",
   "main": "index.js",
-  "types": "react-native-picker-module.d.ts",
+  "types": "react-native-picker-module-delete.d.ts",
   "keywords": [
     "react-native",
     "ios",
@@ -24,10 +24,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/talut/react-native-picker-module.git"
+    "url": "git://github.com/denissb/react-native-picker-module-delete.git"
   },
   "bugs": {
-    "url": "https://github.com/talut/react-native-picker-module/issues"
+    "url": "https://github.com/denissb/react-native-picker-module-delete/issues"
   },
-  "homepage": "https://github.com/talut/react-native-picker-module#readme"
+  "homepage": "https://github.com/denissb/react-native-picker-module-delete#readme",
+  "devDependencies": {
+    "@react-native-community/eslint-config": "0.0.7",
+    "eslint": "6.8.0",
+    "eslint-plugin-prettier": "3.1.2",
+    "eslint-plugin-react": "7.18.3",
+    "prettier": "1.19.1"
+  }
 }
